@@ -7,8 +7,11 @@ import javafx.geometry.Insets;
 import javafx.stage.Stage;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
+import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -31,7 +34,54 @@ public class Main extends Application implements EventHandler<ActionEvent>{
 	Label titre = new Label("Formulaire d'inscription");
 	
 	Label recap = new Label("Vos contacts : ");
+	
+	Button button = new Button("Submit");
+	
+    CheckBox etudiant = new CheckBox("Etudiant");
+    CheckBox employe = new CheckBox("Employé");
 	@Override
+	public void start(Stage primaryStage) throws Exception { 
+	VBox layout = new VBox();
+    Scene scene = new Scene(layout, 250, 150);  
+     
+    RadioButton radio1 = new RadioButton("Option 1");
+    RadioButton radio2 = new RadioButton("Option 2");
+     
+    ToggleGroup radioGroup = new ToggleGroup();
+    radio1.setToggleGroup(radioGroup);
+    radio2.setToggleGroup(radioGroup);
+     
+    Button button = new Button("Submit");
+    button.setOnAction(e -> {
+        RadioButton temp = (RadioButton) radioGroup.getSelectedToggle();
+        System.out.println(temp.getText());
+    });
+         
+    layout.getChildren().addAll(radio1, radio2, button);
+ 
+    primaryStage.setTitle("CodersLegacy");
+    primaryStage.setScene(scene);   
+    primaryStage.show();
+	}
+	/*
+	public void start(Stage primaryStage) throws Exception { 
+        
+        VBox layout = new VBox();
+        Scene scene = new Scene(layout, 250, 150);  
+         
+    
+             
+        
+        
+        button.setOnAction(this);
+              
+        layout.getChildren().addAll(etudiant, employe, button);
+     
+        primaryStage.setTitle("CodersLegacy");
+        primaryStage.setScene(scene);   
+        primaryStage.show();
+    }*/
+	/*
 	public void start(Stage primaryStage) {
 		try {
 			
@@ -73,7 +123,7 @@ public class Main extends Application implements EventHandler<ActionEvent>{
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
-	}
+	}*/
 	
 	public static void main(String[] args) {
 		launch(args);
@@ -93,5 +143,20 @@ public class Main extends Application implements EventHandler<ActionEvent>{
             recap.setText(recap.getText()+" "+nom+" "+tel+" "+email);
         }
 		
+		if(event.getSource()==button)
+		{
+			boolean estEtudiant = etudiant.isSelected();
+			boolean estEmploye = employe.isSelected();
+			
+			if(estEtudiant == true )
+			{
+				System.out.println("Vous êtes un étudiant");
+			}
+			
+			if(estEmploye == true )
+			{
+				System.out.println("Vous êtes un employé");
+			}
+		}
 	}
 }
